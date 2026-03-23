@@ -8,6 +8,7 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Tumne bola: " + text)
 
 app = ApplicationBuilder().token(TOKEN).build()
+
 app.add_handler(MessageHandler(filters.TEXT, reply))
 
 app.run_polling()
