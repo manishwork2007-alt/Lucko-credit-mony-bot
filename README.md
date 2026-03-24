@@ -1,2 +1,2 @@
-# Lucko-credit-mony-bot
-lucko credit mony bot
+# Lucko-credit-money-bot
+lucko credit money bot
