@@ -22,25 +22,24 @@ def save_user(user_id):
 def start_msg(message):
     user_id = message.chat.id
     save_user(user_id)
-    bot.send_message(message.chat.id, "Hello 👋 Support se connect ho gaye ho")
-
-# ===== USER MESSAGE → ADMIN =====
-@bot.message_handler(func=lambda m: m.chat.id != ADMIN_ID)
-def user_message(message):
-    user_id = message.chat.id
-    save_user(user_id)
-
-    text = f"USER_ID: {user_id}\n\n{message.text}"
-    bot.send_message(ADMIN_ID, text)
+    bot.send_message(message.chat.id, "Hello")
 
 # ===== ADMIN REPLY → USER =====
-@bot.message_handler(func=lambda m: m.chat.id == ADMIN_ID)
+@bot.message_handler(func=lambda message: message.chat.id == ADMIN_ID)
 def admin_reply(message):
     try:
         user_id, msg = message.text.split(" ", 1)
         bot.send_message(int(user_id), msg)
     except:
-        bot.send_message(ADMIN_ID, "Format sahi likho:\nUSERID message")
+        bot.send_message(ADMIN_ID, "Format: USERID message")
+
+# ===== USER MESSAGE → ADMIN =====
+@bot.message_handler(func=lambda message: message.chat.id != ADMIN_ID)
+def all_messages(message):
+    user_id = message.chat.id
+    msg_text = message.text if message.text else "Media message"
+    text = f"USER_ID: {user_id}\n\n{msg_text}"
+    bot.send_message(ADMIN_ID, text)
 
 print("Bot Running...")
 bot.infinity_polling()
